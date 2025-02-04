@@ -1,0 +1,19 @@
+spring:
+  application:
+    name: WebLab4
+  datasource:
+    url: jdbc:postgresql://localhost:5432/postgres
+    username: postgres
+    password: postgres
+    driver-class-name: org.postgresql.Driver
+    hikari:
+      auto-commit: true
+      transaction-isolation: TRANSACTION_READ_COMMITTED
+  jpa:
+    hibernate:
+      ddl-auto: update
+    show-sql: true
+jwt:
+  secret: idotwannabeyourfriendiwannakissyourlips
+server:
+  port: 8080
