@@ -1,5 +1,7 @@
 package lt.shgg.weblab4.services
 
+import lt.shgg.weblab4.mbeans.Counter
+import lt.shgg.weblab4.mbeans.RatioStat
 import lt.shgg.weblab4.models.Point
 import lt.shgg.weblab4.models.User
 import org.apache.coyote.BadRequestException
@@ -21,7 +23,13 @@ class PointsService (
     private var usersRepository: UsersRepository,
 
     @Autowired
-    private var pointsRepository: PointsRepository
+    private var pointsRepository: PointsRepository,
+
+    @Autowired
+    private var counter: Counter,
+
+    @Autowired
+    private var ratioStat: RatioStat
 ) {
     private val logger: Logger = Logger.getLogger("PointsService")
     private val pageSize: Int = 10
@@ -36,6 +44,8 @@ class PointsService (
         point.user = user
         point.hit = Calculator.calcHit(point.x, point.y, point.r)
         pointsRepository.save(point)
+        counter.updateAttempt(point.hit) // MBEAN MENTIONED!!!
+        ratioStat.updateStat(point.hit) // MBEAN MENTIONED!!!
 
         return point
     }
